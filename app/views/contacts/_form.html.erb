@@ -1,10 +1,10 @@
-<%= form_with(model: contact, local: true) do |form| %>
-  <% if contact.errors.any? %>
+<%= nested_form_for(@contact) do |form| %>
+  <% if @contact.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(contact.errors.count, "error") %> prohibited this contact from being saved:</h2>
+      <h2><%= pluralize(@contact.errors.count, "error") %> prohibited this contact from being saved:</h2>
 
       <ul>
-      <% contact.errors.full_messages.each do |message| %>
+      <% @contact.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -18,7 +18,11 @@
 
   <div class="field">
     <%= form.label :phones %>
-    <%= form.text_field :phones, id: :contact_phones %>
+    <%= form.fields_for :phones do |phone|%>
+      <%= phone.text_field :number %>
+      <%= phone.link_to_remove "Remove phone" %>
+    <% end %>
+    <%= form.link_to_add "Add Phone", :phones %>
   </div>
 
   <div class="actions">
