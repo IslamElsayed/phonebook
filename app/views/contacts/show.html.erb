@@ -7,7 +7,7 @@
 
 <p>
   <strong>Phones:</strong>
-  <%= @contact.phones %>
+  <%= @contact.phones.map(&:number).join(", ") %>
 </p>
 
 <%= link_to 'Edit', edit_contact_path(@contact) %> |
